@@ -22,8 +22,20 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
-    // Users Routes
-    Route::get('users', Users\Index::class)->name('users.index');
+    // // Users Management
+    // Route::redirect('users', 'users-management/user');
+    // Volt::route('users', 'users-management.user')->name('users-management.user');
+
+    Route::redirect('users', 'users/user-index');
+    Volt::route('users', 'users.user-index')->name('users.user-index');
+
+    // Roles Management
+    Route::redirect('roles', 'users-management/roles');
+    Volt::route('roles', 'users-management.roles')->name('users-management.roles');
+
+    // Permissions Management
+    Route::redirect('permissions', 'users-management/permissions');
+    Volt::route('permissions', 'users-management.permissions')->name('users-management.permissions');
 
 });
 

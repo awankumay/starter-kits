@@ -60,9 +60,11 @@
             <flux:dropdown class="max-lg:hidden">
                 <flux:navbar.item icon:trailing="chevron-down">User Management</flux:navbar.item>
                 <flux:navmenu>
-                    <flux:navmenu.item href="#">Roles</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Permission</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Users</flux:navmenu.item>
+                    <flux:navmenu.item :href="route('users-management.roles')" :current="request()->routeIs('users-management.roles')" wire:navigate>{{ __('Roles') }}</flux:navmenu.item>
+                    <flux:navmenu.item :href="route('users-management.permissions')" :current="request()->routeIs('users-management.permissions')" wire:navigate>{{ __('Permissions') }}</flux:navmenu.item>
+                    {{-- <flux:navmenu.item href="#">Users</flux:navmenu.item> --}}
+                    <flux:navmenu.item :href="route('users.user-index')" :current="request()->routeIs('users.user-index')" wire:navigate>{{ __('Users') }}
+                    </flux:navmenu.item>
                 </flux:navmenu>
             </flux:dropdown>
         </flux:navbar>
