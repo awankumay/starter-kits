@@ -37,7 +37,6 @@
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
@@ -47,6 +46,7 @@
     }
 }
 
+/* Form element styles */
 [data-flux-field]:not(ui-radio, ui-checkbox) {
     @apply grid gap-2;
 }
@@ -61,7 +61,87 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
+/* User table styles */
+.users-table {
+    @apply min-w-full;
+}
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+.users-table thead {
+    @apply bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700;
+}
+
+.users-table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-zinc-700 dark:text-zinc-300 uppercase tracking-wider;
+}
+
+.users-table th.checkbox-column {
+    @apply px-4 py-3 w-12;
+}
+
+.users-table tbody {
+    @apply divide-y divide-zinc-200 dark:divide-zinc-700;
+}
+
+.users-table tr {
+    @apply hover:bg-zinc-50 dark:hover:bg-zinc-700/50;
+}
+
+.users-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-zinc-700 dark:text-zinc-300;
+}
+
+.users-table td.checkbox-cell {
+    @apply px-4 py-4;
+}
+
+/* User info and avatar */
+.user-info {
+    @apply flex items-center;
+}
+
+.user-avatar {
+    @apply h-10 w-10 flex-shrink-0;
+}
+
+.user-avatar img {
+    @apply h-10 w-10 rounded-full object-cover;
+}
+
+.user-details {
+    @apply ml-4;
+}
+
+.user-name {
+    @apply font-medium text-zinc-900 dark:text-zinc-100;
+}
+
+.user-email {
+    @apply text-sm text-zinc-500 dark:text-zinc-400;
+}
+
+/* User status indicators */
+.status-indicator {
+    @apply flex items-center;
+}
+
+.status-dot {
+    @apply h-2.5 w-2.5 rounded-full mr-2;
+}
+
+.status-dot.active {
+    @apply bg-green-500;
+}
+
+.status-dot.inactive {
+    @apply bg-red-500;
+}
+
+/* Action links */
+.action-link {
+    @apply text-blue-600 hover:text-blue-900;
+}
+
+/* Toast notification */
+.notification-toast {
+    @apply fixed bottom-4 right-4 z-50 shadow-lg rounded-md px-4 py-3 flex items-center space-x-3;
+}
