@@ -19,7 +19,7 @@ class UserCreate extends Component
     // Add User form properties
     public $name = '';
     public $email = '';
-    public $role = '';
+    public $user_type='user'; // Default to admin
     public $status = 'active'; // Default to active
     public $password = '';
     public $password_confirmation = '';

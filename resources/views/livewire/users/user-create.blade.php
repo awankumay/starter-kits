@@ -9,21 +9,22 @@
 
             <form wire:submit.prevent="createUser" class="space-y-4">
                 <flux:input label="Full Name" placeholder="Enter full name" wire:model="name" required />
-                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                {{-- @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror --}}
 
                 <flux:input label="Email Address" type="email" placeholder="user@example.com" wire:model="email" required />
-                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                {{-- @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror --}}
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <flux:select label="Role" wire:model="role" required>
+                        {{-- Default Role Regular User / User --}}
+                        <flux:select label="User Type" wire:model="user_type" required>
                             <option value="">Select role</option>
                             <option value="admin">Administrator</option>
                             <option value="finance">Finance</option>
                             <option value="supervisor">Supervisor</option>
                             <option value="user">Regular User</option>
                         </flux:select>
-                        @error('role') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        {{-- @error('user_type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror --}}
                     </div>
 
                     <div>
@@ -31,14 +32,14 @@
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                         </flux:select>
-                        @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        {{-- @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror --}}
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <flux:input label="Password" type="password" placeholder="Create password" wire:model="password" required />
-                        @error('password') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        {{-- @error('password') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror --}}
                     </div>
                     <div>
                         <flux:input label="Confirm Password" type="password" placeholder="Confirm password" wire:model="password_confirmation" required />
