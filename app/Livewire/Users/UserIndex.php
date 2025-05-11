@@ -12,7 +12,6 @@ use Masmerise\Toaster\Toaster;
 class UserIndex extends Component
 {
     use WithPagination;
-    // use Toaster; // Add the Toaster trait
 
     public $users;
 
@@ -36,7 +35,10 @@ class UserIndex extends Component
     public $showAddUserModal = false;
     public $showEditUserModal = false;
 
-    protected $listeners = ['deleteConfirmed' => 'deleteUser'];
+    protected $listeners = [
+        'deleteConfirmed' => 'deleteUser',
+        'userCreated' => 'refreshUsers', // Listener untuk event dari UserCreate
+    ];
 
     protected function rules()
     {
@@ -66,37 +68,12 @@ class UserIndex extends Component
         $this->resetPage();
     }
 
-    public function createUser()
-    {
-        $validatedData = $this->validate();
-
-        User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-            // 'role' => $this->role,
-            // 'status' => $this->status,
-        ]);
-
-        // Reset form fields
-        $this->reset(['name', 'email', 'role', 'password', 'password_confirmation']);
-        $this->status = 'active'; // Reset to default
-
-        // Update the users list
-        $this->users = User::all();
-
-        $this->showAddUserModal = false; // Tutup modal setelah berhasil tambah user
-        Toaster::success('User added successfully!');
-    }
-
     public function editUser($userId)
     {
-        $this->editUserId = $userId;
-        $this->editUser = User::find($userId);
-        $this->newPassword = '';
-        $this->showEditUserModal = true;
+        $user = User::select('name', 'email', 'password')->find($userId);
 
-        dd($this->editUser); // Debug: cek apakah data user berhasil diambil
+        // Use dd() for debugging
+        dd($user);
     }
 
     public function updateUser()
@@ -145,6 +122,12 @@ class UserIndex extends Component
         }
 
         $this->showDeleteModal = false; // Tutup modal setelah proses selesai
+    }
+
+    public function refreshUsers()
+    {
+        $this->users = User::all();
+        $this->showAddUserModal = false; // Tutup modal jika perlu
     }
 
     public function render()

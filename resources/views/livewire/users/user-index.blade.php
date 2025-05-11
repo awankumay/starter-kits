@@ -21,10 +21,15 @@
             </div>
 
             {{-- Add New User --}}
-            <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md"
+            <flux:modal.trigger name="add-user">
+                <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md">
+                    Add User
+                </button>
+            </flux:modal.trigger>
+            {{-- <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md"
                 x-on:click="$wire.showAddUserModal = true">
                 Add User
-            </button>
+            </button> --}}
 
         </div>
         <div>
@@ -88,10 +93,11 @@
                     </td>
                     <td>
                         <div class="flex items-center justify-start space-x-4">
+                        <div class="flex items-center justify-start space-x-4">
                             <flux:modal.trigger name="edit-user">
                                 <button type="button"
                                     class="px-3.5 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm font-medium transition-colors duration-150 flex items-center mr-2"
-                                    wire:click="editUser({{ $user->id }})">
+                                    wire:click="editUser(1)">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
@@ -119,60 +125,7 @@
     </div>
 
     <!-- Add User Modal -->
-    <flux:modal wire:model.self="showAddUserModal" name="add-user" class="md:w-[600px]">
-        <div class="space-y-6">
-            <div>
-                <flux:heading size="lg">Add New User</flux:heading>
-                <flux:text class="mt-2">Create a new user account with appropriate permissions.</flux:text>
-            </div>
-
-            <form wire:submit.prevent="createUser" class="space-y-4">
-                <flux:input label="Full Name" placeholder="Enter full name" wire:model="name" required />
-                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                <flux:input label="Email Address" type="email" placeholder="user@example.com" wire:model="email" required />
-                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <flux:select label="Role" wire:model="role" required>
-                            <option value="">Select role</option>
-                            <option value="admin">Administrator</option>
-                            <option value="finance">Finance</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="user">Regular User</option>
-                        </flux:select>
-                        @error('role') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div>
-                        <flux:select label="Status" wire:model="status" required>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </flux:select>
-                        @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <flux:input label="Password" type="password" placeholder="Create password" wire:model="password" required />
-                        @error('password') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                    </div>
-                    <div>
-                        <flux:input label="Confirm Password" type="password" placeholder="Confirm password" wire:model="password_confirmation" required />
-                    </div>
-                </div>
-
-                <div class="flex justify-end space-x-3 pt-4">
-                    <flux:modal.close>
-                        <flux:button type="button" variant="outline" x-on:click="$wire.showAddUserModal = false">Cancel</flux:button>
-                    </flux:modal.close>
-                    <flux:button type="submit" variant="primary">Add User</flux:button>
-                </div>
-            </form>
-        </div>
-    </flux:modal>
+    <livewire:users.user-create />
 
     <!-- Edit User Modal -->
     <flux:modal wire:model.self="showEditUserModal" name="edit-user" class="md:w-[600px]">
@@ -182,86 +135,77 @@
                 <flux:text class="mt-2">Perbarui informasi pengguna</flux:text>
             </div>
 
-            @if($editUser)
-            <div class="flex items-center justify-center mb-4">
-                <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
-                    @if ($editUser->avatar && file_exists(public_path($editUser->avatar)))
-                    <img src="{{ asset($editUser->avatar) }}" alt="{{ $editUser->name }}"
-                        class="w-full h-full object-cover">
-                    @else
-                    <img src="{{ asset('personal.jpg') }}" alt="{{ $editUser->name }}"
-                        class="w-full h-full object-cover">
-                    @endif
-                </div>
-            </div>
-
-            <form wire:submit.prevent="updateUser" class="space-y-6">
-                <flux:input
-                    label="Nama Lengkap"
-                    wire:model="editUser.name"
-                    required
-                />
-                @error('editUser.name')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-
-                <flux:input
-                    label="Alamat Email"
-                    type="email"
-                    wire:model="editUser.email"
-                    required
-                />
-                @error('editUser.email')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <flux:select label="Peran" wire:model="editUser.role">
-                            <option value="">-- Pilih Peran --</option>
-                            <option value="admin">Administrator</option>
-                            <option value="finance">Keuangan</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="user">Pengguna Biasa</option>
-                        </flux:select>
-                        @error('editUser.role')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <flux:select label="Status" wire:model="editUser.status">
-                            <option value="active">Aktif</option>
-                            <option value="inactive">Tidak Aktif</option>
-                        </flux:select>
-                        @error('editUser.status')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+            {{-- @if($editUser)
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
+                        @if ($editUser->avatar && file_exists(public_path($editUser->avatar)))
+                            <img src="{{ asset($editUser->avatar) }}" alt="{{ $editUser->name }}" class="w-full h-full object-cover">
+                        @else
+                            <img src="{{ asset('personal.jpg') }}" alt="{{ $editUser->name }}" class="w-full h-full object-cover">
+                        @endif
                     </div>
                 </div>
-
-                <flux:input
-                    label="Kata Sandi Baru"
-                    type="password"
-                    placeholder="Biarkan kosong untuk mempertahankan kata sandi saat ini"
-                    wire:model="newPassword"
-                />
-                @error('newPassword')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-
-                <div class="flex justify-end space-x-3 pt-4">
-                    <flux:modal.close>
-                        <flux:button variant="outline">Batal</flux:button>
-                    </flux:modal.close>
-                    <flux:button type="submit" variant="primary">Simpan Perubahan</flux:button>
+                <div class="text-center mb-2">
+                    <span class="text-gray-500 text-sm">Avatar tidak dapat diubah</span>
                 </div>
-            </form>
+
+                <form wire:submit.prevent="updateUser" class="space-y-6">
+                    <flux:input
+                        label="Nama Lengkap"
+                        wire:model="editUser.name"
+                        required
+                    />
+                    @error('editUser.name')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+
+                    <flux:input
+                        label="Alamat Email"
+                        type="email"
+                        wire:model="editUser.email"
+                        required
+                    />
+                    @error('editUser.email')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Peran</label>
+                            <div class="py-2 px-3 bg-gray-100 rounded text-gray-700">
+                                {{ $editUser->role ?? 'Administrator' }}
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <div class="py-2 px-3 bg-gray-100 rounded text-gray-700">
+                                {{ $editUser->status ?? 'Active' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <flux:input
+                        label="Kata Sandi Baru"
+                        type="password"
+                        placeholder="Biarkan kosong untuk mempertahankan kata sandi saat ini"
+                        wire:model="newPassword"
+                    />
+                    @error('newPassword')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <flux:modal.close>
+                            <flux:button variant="outline">Batal</flux:button>
+                        </flux:modal.close>
+                        <flux:button type="submit" variant="primary">Simpan Perubahan</flux:button>
+                    </div>
+                </form>
             @else
-            <div class="text-center p-4">
-                <p>Informasi pengguna tidak tersedia.</p>
-            </div>
-            @endif
+                <div class="text-center p-4">
+                    <p>Informasi pengguna tidak tersedia.</p>
+                </div>
+            @endif --}}
         </div>
     </flux:modal>
 
