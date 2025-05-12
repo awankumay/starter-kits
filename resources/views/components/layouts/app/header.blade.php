@@ -14,59 +14,61 @@
             <x-app-logo />
         </a>
 
-
         <flux:navbar class="-mb-px max-lg:hidden">
             <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                 wire:navigate>
                 {{ __('Dashboard') }}
             </flux:navbar.item>
-            <flux:dropdown class="max-lg:hidden">
-                <flux:navbar.item icon:trailing="chevron-down">Logistic</flux:navbar.item>
-                <flux:navmenu>
-                    <flux:navmenu.item href="#">Request</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Stock</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Items</flux:navmenu.item>
-                </flux:navmenu>
-            </flux:dropdown>
-            {{-- Operations --}}
-            <flux:dropdown class="max-lg:hidden">
-                <flux:navbar.item icon:trailing="chevron-down">Operations</flux:navbar.item>
-                <flux:navmenu>
-                    <flux:navmenu.item href="#">Form Request</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Stock</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Units</flux:navmenu.item>
-                </flux:navmenu>
-            </flux:dropdown>
-            {{-- Employee --}}
-            <flux:dropdown class="max-lg:hidden">
-                <flux:navbar.item icon:trailing="chevron-down">Employee</flux:navbar.item>
-                <flux:navmenu>
-                    <flux:navmenu.item href="#">List Employee</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Absence</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Position</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Shift Scheduling</flux:navmenu.item>
-                </flux:navmenu>
-            </flux:dropdown>
-            {{-- Reporting --}}
-            <flux:dropdown class="max-lg:hidden">
-                <flux:navbar.item icon:trailing="chevron-down">Reporting</flux:navbar.item>
-                <flux:navmenu>
-                    <flux:navmenu.item href="#">Logistic</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Operations</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Employee</flux:navmenu.item>
-                </flux:navmenu>
-            </flux:dropdown>
-            {{-- User Management --}}
-            <flux:dropdown class="max-lg:hidden">
-                <flux:navbar.item icon:trailing="chevron-down">User Management</flux:navbar.item>
-                <flux:navmenu>
-                    <flux:navmenu.item :href="route('users-management.roles')" :current="request()->routeIs('users-management.roles')" wire:navigate>{{ __('Roles') }}</flux:navmenu.item>
-                    <flux:navmenu.item :href="route('users-management.permissions')" :current="request()->routeIs('users-management.permissions')" wire:navigate>{{ __('Permissions') }}</flux:navmenu.item>
-                    {{-- <flux:navmenu.item href="#">Users</flux:navmenu.item> --}}
-                    <flux:navmenu.item :href="route('users.user-index')" :current="request()->routeIs('users.user-index')" wire:navigate>{{ __('Users') }}
-                    </flux:navmenu.item>
-                </flux:navmenu>
-            </flux:dropdown>
+            @if(auth()->user()->hasRole('administrator'))
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon:trailing="chevron-down">Logistic</flux:navbar.item>
+                    <flux:navmenu>
+                        <flux:navmenu.item href="#">Request</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Stock</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Items</flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+                {{-- Operations --}}
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon:trailing="chevron-down">Operations</flux:navbar.item>
+                    <flux:navmenu>
+                        <flux:navmenu.item href="#">Form Request</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Stock</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Units</flux:navmenu.item>
+                        <flux:navmenu.item :href="route('unit-types.index')" :current="request()->routeIs('unit-types.index')" wire:navigate>{{ __('Types') }}</flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+                {{-- Employee --}}
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon:trailing="chevron-down">Employee</flux:navbar.item>
+                    <flux:navmenu>
+                        <flux:navmenu.item href="#">List Employee</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Absence</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Position</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Shift Scheduling</flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+                {{-- Reporting --}}
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon:trailing="chevron-down">Reporting</flux:navbar.item>
+                    <flux:navmenu>
+                        <flux:navmenu.item href="#">Logistic</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Operations</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Employee</flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+                {{-- User Management --}}
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon:trailing="chevron-down">User Management</flux:navbar.item>
+                    <flux:navmenu>
+                        <flux:navmenu.item :href="route('users-management.roles')" :current="request()->routeIs('users-management.roles')" wire:navigate>{{ __('Roles') }}</flux:navmenu.item>
+                        <flux:navmenu.item :href="route('users-management.permissions')" :current="request()->routeIs('users-management.permissions')" wire:navigate>{{ __('Permissions') }}</flux:navmenu.item>
+                        {{-- <flux:navmenu.item href="#">Users</flux:navmenu.item> --}}
+                        <flux:navmenu.item :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}
+                        </flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+            @endif
         </flux:navbar>
 
         <flux:spacer />
@@ -144,6 +146,15 @@
                     {{ __('Dashboard') }}
                 </flux:navlist.item>
             </flux:navlist.group>
+            @if(auth()->user()->hasRole('administrator'))
+                <flux:navlist.group :heading="__('Menu')">
+                    <flux:navlist.item icon="cube" href="#">Logistic</flux:navlist.item>
+                    <flux:navlist.item icon="clipboard-document-list" href="#">Operations</flux:navlist.item>
+                    <flux:navlist.item icon="users" href="#">Employee</flux:navlist.item>
+                    <flux:navlist.item icon="chart-bar" href="#">Reporting</flux:navlist.item>
+                    <flux:navlist.item icon="user-group" href="#">User Management</flux:navlist.item>
+                </flux:navlist.group>
+            @endif
         </flux:navlist>
 
         <flux:spacer />
@@ -164,6 +175,8 @@
     {{ $slot }}
 
     @fluxScripts
+
+    <x-toaster-hub/>
 </body>
 
 </html>

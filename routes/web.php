@@ -26,20 +26,25 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
-    // // Users Management
-    // Route::redirect('users', 'users-management/user');
-    // Volt::route('users', 'users-management.user')->name('users-management.user');
+    // Roles & Permissions Administration
+    Route::middleware(['role:administrator'])->group(function () {
 
-    Route::redirect('users', 'users/user-index');
-    Volt::route('users', 'users.user-index')->name('users.user-index');
+        // Users Management
+        Route::redirect('users', 'users/index');
+        Volt::route('users', 'users.index')->name('users.index');
 
-    // Roles Management
-    Route::redirect('roles', 'users-management/roles');
-    Volt::route('roles', 'users-management.roles')->name('users-management.roles');
+        // Permissions Management
+        Route::redirect('permissions', 'users-management/permissions');
+        Volt::route('permissions', 'users-management.permissions')->name('users-management.permissions');
 
-    // Permissions Management
-    Route::redirect('permissions', 'users-management/permissions');
-    Volt::route('permissions', 'users-management.permissions')->name('users-management.permissions');
+        // Roles Management
+        Route::redirect('roles', 'users-management/roles');
+        Volt::route('roles', 'users-management.roles')->name('users-management.roles');
+
+        Route::redirect('unit-types', 'unit-types/index');
+        Volt::route('unit-types', 'unit-types.index')->name('unit-types.index');
+
+    });
 
 });
 
