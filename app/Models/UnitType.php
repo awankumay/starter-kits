@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $created_at
  * @property $updated_at
  *
- * @property OperationsUnit[] $operationsUnits
+ * @property Units[] $units
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -38,9 +38,9 @@ class UnitType extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function operationsUnits()
+    public function units()
     {
-        return $this->hasMany(\App\Models\OperationsUnit::class, 'id', 'unit_type_id');
+        return $this->hasMany(Units::class, 'unit_type_id');
     }
 
 }

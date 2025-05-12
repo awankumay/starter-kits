@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
         Route::redirect('fuel', 'fuel/index');
         Volt::route('fuel', 'fuel.index')->name('fuel.index');
 
+        // Rute untuk OperationsUnit
+        Route::resource('operations-units', 'App\Http\Controllers\OperationsUnitController');
+
     });
 
 });
