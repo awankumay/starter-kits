@@ -32,9 +32,9 @@
                 <flux:dropdown class="max-lg:hidden">
                     <flux:navbar.item icon:trailing="chevron-down">Operations</flux:navbar.item>
                     <flux:navmenu>
-                        <flux:navmenu.item href="#">Form Request</flux:navmenu.item>
+                        <flux:navmenu.item :href="route('fuel.index')" :current="request()->routeIs('fuel.index')" wire:navigate>{{ __('Fuel') }}</flux:navmenu.item>
                         <flux:navmenu.item href="#">Stock</flux:navmenu.item>
-                        <flux:navmenu.item href="#">Units</flux:navmenu.item>
+                        <flux:navmenu.item :href="route('units.index')" :current="request()->routeIs('units.index')" wire:navigate>{{__('Units') }}</flux:navmenu.item>
                         <flux:navmenu.item :href="route('unit-types.index')" :current="request()->routeIs('unit-types.index')" wire:navigate>{{ __('Types') }}</flux:navmenu.item>
                     </flux:navmenu>
                 </flux:dropdown>

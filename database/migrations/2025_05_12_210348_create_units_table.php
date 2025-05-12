@@ -15,19 +15,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('operations_units', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
             $table->unsignedBigInteger('unit_type_id'); // relasi ke unit_types
-            $table->string('location')->nullable();
+            $table->string('location')->nullable(); // Next Relation Data Location
             $table->string('fuel_type')->nullable(); // tipe data string untuk jenis bbm
-            $table->integer('fuel_capacity')->nullable(); // tipe data integer untuk kapasitas bbm
-            $table->integer('capacity')->nullable();
-            $table->string('operator')->nullable();
-            $table->string('status')->nullable(); // Status data (misal: active, deleted)
+            $table->string('operator')->nullable(); // Next Relation Data Employee
             $table->string('description')->nullable();
             $table->string('image_unit')->nullable(); // Menyimpan nama file gambar
+            $table->string('is_deleted')->nullable();
             $table->softDeletes(); // Menambahkan kolom deleted_at untuk soft delete
             $table->timestamps();
 
@@ -41,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('operations_units');
+        Schema::dropIfExists('units');
     }
 };

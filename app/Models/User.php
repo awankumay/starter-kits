@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -55,6 +55,13 @@ class User extends Authenticatable
     }
 
     /**
+     * The column to use for soft deletes
+     *
+     * @var string
+     */
+    protected $deletedColumn = 'is_deleted';
+
+    /**
      * Get the user's initials
      */
     public function initials(): string
@@ -70,7 +77,7 @@ class User extends Authenticatable
      */
     public function softDelete()
     {
-        $this->is_deleted = true;
+        $this->is_deleted = 1;
         return $this->save();
     }
 
@@ -88,5 +95,13 @@ class User extends Authenticatable
     public function getStatusLabel(): string
     {
         return $this->is_active ? 'Active' : 'Inactive';
+    }
+
+    /**
+     * Check if user is deleted
+     */
+    public function isDeleted(): bool
+    {
+        return (bool) $this->is_deleted;
     }
 }
