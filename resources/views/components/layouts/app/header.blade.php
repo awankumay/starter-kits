@@ -64,7 +64,7 @@
                         <flux:navmenu.item :href="route('users-management.roles')" :current="request()->routeIs('users-management.roles')" wire:navigate>{{ __('Roles') }}</flux:navmenu.item>
                         <flux:navmenu.item :href="route('users-management.permissions')" :current="request()->routeIs('users-management.permissions')" wire:navigate>{{ __('Permissions') }}</flux:navmenu.item>
                         {{-- <flux:navmenu.item href="#">Users</flux:navmenu.item> --}}
-                        <flux:navmenu.item :href="route('users.user-index')" :current="request()->routeIs('users.user-index')" wire:navigate>{{ __('Users') }}
+                        <flux:navmenu.item :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}
                         </flux:navmenu.item>
                     </flux:navmenu>
                 </flux:dropdown>

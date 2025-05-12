@@ -30,8 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:administrator'])->group(function () {
 
         // Users Management
-        Route::redirect('users', 'users/user-index');
-        Volt::route('users', 'users.user-index')->name('users.user-index');
+        Route::redirect('users', 'users/index');
+        Volt::route('users', 'users.index')->name('users.index');
 
         // Permissions Management
         Route::redirect('permissions', 'users-management/permissions');

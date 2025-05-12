@@ -9,26 +9,11 @@ use Illuminate\Validation\Rules\Password;
 use Masmerise\Toaster\Toaster;
 use Spatie\Permission\Models\Role;
 
-/**
- * Komponen Livewire untuk menambah user baru.
- * Setelah user berhasil ditambah, akan mengirim event ke parent agar data user di-refresh.
- *
- * Perubahan:
- * - Pemilihan role user sekarang menggunakan dropdown user type yang mengambil data dari database.
- * - Properti dan logika terkait checkbox role dihapus.
- * - Role user di-assign sesuai dengan user type yang dipilih.
- */
-class UserCreate extends Component
+class Create extends Component
 {
-    public $name = '';
-    public $email = '';
-    public $user_type = 'user'; // Default ke user
-    public $status = 'active'; // Default ke active
-    public $password = '';
-    public $password_confirmation = '';
+    public $name, $email, $password, $password_confirmation, $is_active, $is_deleted;
+    public $user_type = 'user';
     public $showAddUserModal = false;
-
-    // Role list untuk dropdown
     public $roles = [];
 
     protected $rules = [
@@ -51,7 +36,6 @@ class UserCreate extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'status' => $this->status,
         ]);
 
         // Assign role sesuai user_type yang dipilih
@@ -62,7 +46,7 @@ class UserCreate extends Component
         }
 
         $this->reset(['name', 'email', 'user_type', 'password', 'password_confirmation']);
-        $this->status = 'active';
+
         $this->showAddUserModal = false;
 
         $this->dispatch('userCreated');
@@ -71,6 +55,6 @@ class UserCreate extends Component
 
     public function render()
     {
-        return view('livewire.users.user-create');
+        return view('livewire.users.create');
     }
 }
