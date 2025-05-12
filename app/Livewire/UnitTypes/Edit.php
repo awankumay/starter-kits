@@ -53,7 +53,6 @@ class Edit extends Component
             ],
             'brand' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            // 'is_deleted' => 'boolean',
         ]);
         $unitType = UnitType::find($this->unitTypeId);
         $unitType->type = $this->type;

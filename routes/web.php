@@ -44,6 +44,12 @@ Route::middleware(['auth'])->group(function () {
         Route::redirect('unit-types', 'unit-types/index');
         Volt::route('unit-types', 'unit-types.index')->name('unit-types.index');
 
+        Route::redirect('units', 'units/index');
+        Volt::route('units', 'units.index')->name('units.index');
+
+        Route::redirect('fuel', 'fuel/index');
+        Volt::route('fuel', 'fuel.index')->name('fuel.index');
+
     });
 
 });

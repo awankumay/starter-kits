@@ -30,6 +30,7 @@
                 <flux:input
                     as="text"
                     placeholder="Search for users"
+                    wire:model.live.debounce.300ms="search"
                     icon="magnifying-glass">
                 </flux:input>
             </div>
@@ -51,17 +52,59 @@
                     <th>Action</th>
                 </tr>
             </thead>
+            <tbody>
+                @forelse($users as $user)
+                    <tr>
+                        <td class="checkbox-column">
+                            <input type="checkbox" class="rounded border-zinc-300 dark:border-zinc-600 text-blue-600 focus:ring-blue-500">
+                        </td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->roles->pluck('name')->implode(', ') }}</td>
+                        <td>
+                            <div class="status-indicator">
+                                <div class="status-dot {{ $user->is_active ? 'active' : 'inactive' }}"></div>
+                                <span>{{ $user->is_active ? 'Active' : 'Inactive' }}</span>
+                            </div>
+                        </td>
+                        <td>
+                    <div class="flex items-center justify-start space-x-4">
+                        <div class="flex items-center justify-start space-x-4">
+                            <flux:modal.trigger name="edit-user">
+                                <flux:button type="button" class="mr-2" wire:click="edit({{ $user->id }})">
+                                    Edit
+                                </flux:button>
+                            </flux:modal.trigger>
+
+                            <flux:modal.trigger name="confirm-user-deletion">
+                                <flux:button variant="danger" class="mr-2" wire:click="confirmDelete({{ $user->id }})">
+                                    Delete
+                                </flux:button>
+                            </flux:modal.trigger>
+                        </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-4">No users found</td>
+                    </tr>
+                @endforelse
+            </tbody>
         </table>
+
+        <div class="py-4 px-3">
+            {{ $users->links() }}
+        </div>
     </div>
 
     <!-- Add User Modal -->
     <livewire:users.create />
 
     <!-- Edit User Modal -->
-    <livewire:users.edit/>
+    <livewire:users.edit />
 
     <!-- Delete User Confirmation Modal -->
-    <flux:modal wire:model.self="showDeleteModal" name="confirm-user-deletion" class="md:w-[400px]">
+    <flux:modal wire:model="showDeleteModal" name="confirm-user-deletion" class="md:w-[400px]">
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg" class="text-red-600">Delete User</flux:heading>

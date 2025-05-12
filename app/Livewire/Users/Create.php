@@ -11,8 +11,9 @@ use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
-    public $name, $email, $password, $password_confirmation, $is_active, $is_deleted;
+    public $name, $email, $password, $password_confirmation;
     public $user_type = 'user';
+    public $status = 'active'; // default status aktif
     public $showAddUserModal = false;
     public $roles = [];
 
@@ -20,6 +21,7 @@ class Create extends Component
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'user_type' => 'required|string',
+        'status' => 'required|in:active,inactive',
         'password' => 'required|string|min:8|confirmed',
     ];
 
@@ -32,10 +34,15 @@ class Create extends Component
     {
         $this->validate();
 
+        // Konversi nilai status menjadi boolean untuk is_active
+        $is_active = $this->status === 'active' ? 1 : 0;
+
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'is_active' => $is_active,
+            'is_deleted' => 0 // Default untuk user baru
         ]);
 
         // Assign role sesuai user_type yang dipilih
@@ -45,11 +52,10 @@ class Create extends Component
             $user->assignRole('user');
         }
 
-        $this->reset(['name', 'email', 'user_type', 'password', 'password_confirmation']);
+        $this->reset(['name', 'email', 'user_type', 'password', 'password_confirmation', 'status']);
 
         $this->showAddUserModal = false;
 
-        $this->dispatch('userCreated');
         Toaster::success('User added successfully!');
     }
 

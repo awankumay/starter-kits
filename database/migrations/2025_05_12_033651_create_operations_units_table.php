@@ -22,12 +22,10 @@ return new class extends Migration
             $table->unsignedBigInteger('unit_type_id'); // relasi ke unit_types
             $table->string('location')->nullable();
             $table->string('fuel_type')->nullable(); // tipe data string untuk jenis bbm
-            $table->integer('fuel_capacity')->nullable(); // tipe data integer untuk kapasitas bbm
-            $table->integer('capacity')->nullable();
             $table->string('operator')->nullable();
-            $table->string('status')->nullable(); // Status data (misal: active, deleted)
             $table->string('description')->nullable();
             $table->string('image_unit')->nullable(); // Menyimpan nama file gambar
+            $table->string('is_deleted')->nullable();
             $table->softDeletes(); // Menambahkan kolom deleted_at untuk soft delete
             $table->timestamps();
 
