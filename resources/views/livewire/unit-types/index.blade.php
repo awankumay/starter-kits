@@ -1,10 +1,9 @@
-<div>
+<section>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Users') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('User Management Pages') }}</flux:subheading>
+        <flux:heading size="xl" level="1">{{ __('Types') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Types Pages') }}</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
-
     <div class="flex justify-between items-center mb-4">
         <div class="relative flex space-x-2">
             {{-- Dropdown Action dengan FluxUI --}}
@@ -17,11 +16,10 @@
                     <flux:menu.item variant="danger" icon="trash">Bulk Delete</flux:menu.item>
                 </flux:menu>
             </flux:dropdown>
-
             {{-- Add New User --}}
-            <flux:modal.trigger name="add-user">
+            <flux:modal.trigger name="add-types">
                 <flux:button variant="primary" icon:leading="plus">
-                    Add User
+                    Add Type
                 </flux:button>
             </flux:modal.trigger>
         </div>
@@ -29,13 +27,12 @@
             <div class="relative">
                 <flux:input
                     as="text"
-                    placeholder="Search for users"
+                    placeholder="Search for types"
                     icon="magnifying-glass">
                 </flux:input>
             </div>
         </div>
     </div>
-
     <div class="overflow-x-auto bg-white dark:bg-zinc-800/40 rounded-lg">
         <table class="table-custom">
             <thead>
@@ -44,61 +41,33 @@
                         <input type="checkbox"
                             class="rounded border-zinc-300 dark:border-zinc-600 text-blue-600 focus:ring-blue-500">
                     </th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Roles</th>
-                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Brand</th>
+                    <th>Description</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($users as $user)
+                @forelse ($unitTypes as $unitType)
                 <tr>
                     <td class="checkbox-cell">
                         <input type="checkbox"
                             class="rounded border-zinc-300 dark:border-zinc-600 text-blue-600 focus:ring-blue-500">
                     </td>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">
-                                @if ($user->avatar && file_exists(public_path($user->avatar)))
-                                <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}">
-                                @else
-                                <img src="{{ asset('personal.jpg') }}" alt="{{ $user->name }}">
-                                @endif
-                            </div>
-                            <div class="user-details">
-                                <div class="user-name">{{ $user->name }}</div>
-                                <div class="user-email">{{ $user->email }}</div>
-                            </div>
-                        </div>
-                    <td class="text-zinc-500 dark:text-zinc-400">{{ $user->email }}</td>
-                    <td>
-                        @if($user->roles->count())
-                            {{ $user->roles->map(fn($role) => ucfirst($role->name))->join(', ') }}
-                        @else
-                            Null
-                        @endif
-                    </td>
-                    <td>
-                        <div class="status-indicator">
-                            {{-- <div class="status-dot {{ $user->status == 'active' ? 'active' : 'inactive' }}"></div>
-                            <span>{{ ucfirst($user->status ?? 'Active') }}</span> --}}
-                            <div class="status-dot active"></div>
-                            <span>Active</span>
-                        </div>
-                    </td>
+                    <td>{{ $unitType->type }}</td>
+                    <td>{{ $unitType->brand }}</td>
+                    <td>{{ $unitType->description }}</td>
                     <td>
                     <div class="flex items-center justify-start space-x-4">
                         <div class="flex items-center justify-start space-x-4">
-                            <flux:modal.trigger name="edit-user">
-                                <flux:button type="button" class="mr-2" wire:click="editUser({{ $user->id }})">
+                            <flux:modal.trigger name="edit-unitType">
+                                <flux:button type="button" class="mr-2" wire:click="edit({{ $unitType->id }})">
                                     Edit
                                 </flux:button>
 
                             </flux:modal.trigger>
-                            <flux:modal.trigger name="confirm-user-deletion">
-                                <flux:button variant="danger" class="mr-2" wire:click="confirmDelete({{ $user->id }})">
+                            <flux:modal.trigger name="confirm-unitType-deletion">
+                                <flux:button variant="danger" class="mr-2" wire:click="confirmDelete({{ $unitType->id }})">
                                     Delete
                                 </flux:button>
                             </flux:modal.trigger>
@@ -106,22 +75,23 @@
                     </td>
                 </tr>
                 @empty
-                <tr>
-                    <td colspan="6" class="text-center py-4">No users found</td>
-                </tr>
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            {{ __('No types found.') }}
+                        </td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+    {{-- Modal Create Types --}}
+    <livewire:unit-types.create />
 
-    <!-- Add User Modal -->
-    <livewire:users.user-create />
+    {{-- Modal Edit Types --}}
+    <livewire:unit-types.edit />
 
-    <!-- Edit User Modal -->
-    <livewire:users.user-edit/>
-
-    <!-- Delete User Confirmation Modal -->
-    <flux:modal wire:model.self="showDeleteModal" name="confirm-user-deletion" class="md:w-[400px]">
+    {{-- Modal Show Delete Confrim --}}
+    <flux:modal wire:model.self="showDeleteModal" name="confirm-unitType-deletion" class="md:w-[400px]">
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg" class="text-red-600">Delete User</flux:heading>
@@ -132,9 +102,8 @@
                     <flux:button type="button" variant="outline" x-on:click="$wire.showDeleteModal = false">Cancel
                     </flux:button>
                 </flux:modal.close>
-                <flux:button type="button" variant="primary" wire:click="deleteUser">Confirm</flux:button>
+                <flux:button type="button" variant="primary" wire:click="deleteUnitType">Confirm</flux:button>
             </div>
         </div>
     </flux:modal>
-</div>
-
+</section>

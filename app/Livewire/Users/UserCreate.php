@@ -7,62 +7,65 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Masmerise\Toaster\Toaster;
+use Spatie\Permission\Models\Role;
 
 /**
  * Komponen Livewire untuk menambah user baru.
  * Setelah user berhasil ditambah, akan mengirim event ke parent agar data user di-refresh.
+ *
+ * Perubahan:
+ * - Pemilihan role user sekarang menggunakan dropdown user type yang mengambil data dari database.
+ * - Properti dan logika terkait checkbox role dihapus.
+ * - Role user di-assign sesuai dengan user type yang dipilih.
  */
 class UserCreate extends Component
 {
-    public $users;
-
-    // Add User form properties
     public $name = '';
     public $email = '';
-    public $user_type='user'; // Default to admin
-    public $status = 'active'; // Default to active
+    public $user_type = 'user'; // Default ke user
+    public $status = 'active'; // Default ke active
     public $password = '';
     public $password_confirmation = '';
     public $showAddUserModal = false;
 
-    protected function rules()
-    {
-        return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            // 'role' => 'required|string',
-            // 'status' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
-        ];
-    }
+    // Role list untuk dropdown
+    public $roles = [];
 
-    protected $editRules = [
-        'editUser.name' => 'required|string|max:255',
-        'editUser.email' => 'required|string|email|max:255',
-        // 'editUser.role' => 'required|string',
-        // 'editUser.status' => 'required|string',
+    protected $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'user_type' => 'required|string',
+        'password' => 'required|string|min:8|confirmed',
     ];
+
+    public function mount()
+    {
+        $this->roles = Role::all();
+    }
 
     public function createUser()
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            // 'role' => $this->role,
-            // 'status' => $this->status,
+            'status' => $this->status,
         ]);
 
-        $this->reset(['name', 'email', 'role', 'password', 'password_confirmation']);
-        $this->status = 'active';
+        // Assign role sesuai user_type yang dipilih
+        if (!empty($this->user_type)) {
+            $user->assignRole($this->user_type);
+        } else {
+            $user->assignRole('user');
+        }
 
+        $this->reset(['name', 'email', 'user_type', 'password', 'password_confirmation']);
+        $this->status = 'active';
         $this->showAddUserModal = false;
 
-        // Gunakan dispatch untuk mengirim event ke parent pada Livewire v3
         $this->dispatch('userCreated');
-
         Toaster::success('User added successfully!');
     }
 

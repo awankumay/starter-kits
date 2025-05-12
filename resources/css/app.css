@@ -62,35 +62,35 @@ select:focus[data-flux-control] {
 }
 
 /* User table styles */
-.users-table {
+.table-custom {
     @apply min-w-full;
 }
 
-.users-table thead {
+.table-custom thead {
     @apply bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700;
 }
 
-.users-table th {
+.table-custom th {
     @apply px-6 py-3 text-left text-xs font-medium text-zinc-700 dark:text-zinc-300 uppercase tracking-wider;
 }
 
-.users-table th.checkbox-column {
+.table-custom th.checkbox-column {
     @apply px-4 py-3 w-12;
 }
 
-.users-table tbody {
+.table-custom tbody {
     @apply divide-y divide-zinc-200 dark:divide-zinc-700;
 }
 
-.users-table tr {
+.table-custom tr {
     @apply hover:bg-zinc-50 dark:hover:bg-zinc-700/50;
 }
 
-.users-table td {
+.table-custom td {
     @apply px-6 py-4 whitespace-nowrap text-sm text-zinc-700 dark:text-zinc-300;
 }
 
-.users-table td.checkbox-cell {
+.table-custom td.checkbox-cell {
     @apply px-4 py-4;
 }
 
