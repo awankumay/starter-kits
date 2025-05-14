@@ -4,10 +4,7 @@
     "builds": [
         {
             "src": "/api/index.php",
-            "use": "vercel-php@0.7.3",
-            "config": {
-                "buildCommand": "sh vercel.sh"
-            }
+            "use": "vercel-php@0.7.3"
         },
         { "src": "/public/**", "use": "@vercel/static" }
     ],
