@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use App\Models\Units;
+use App\Models\Fuel;
 // Import model lain yang diperlukan, contoh:
 // use App\Models\Request;
 // use App\Models\FuelExpense;
@@ -12,6 +14,8 @@ use Livewire\Component;
 class Dashboard extends Component
 {
     public int $totalUsersRegistration = 0;
+    public int $totalFuel = 0;
+    public int $totalUnits = 0;
     // Siapkan variabel untuk statistik lainnya
     // public int $totalEmployees = 0;
     // public int $totalRequests = 0;
@@ -33,6 +37,8 @@ class Dashboard extends Component
     public function refreshUserData()
     {
         $this->totalUsersRegistration = User::count();
+        $this->totalUnits = Units::count();
+        $this->totalFuel = Fuel::count();
     }
 
     // Method terpisah untuk setiap jenis data
