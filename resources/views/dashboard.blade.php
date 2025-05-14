@@ -8,7 +8,7 @@
                 <div class="flex flex-1 flex-col gap-1">
                     <p class="text-sm font-medium text-neutral-800 dark:text-neutral-50">Total Users</p>
                     <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                        {{ $totalUsersRegistration }}
+                        {{ $totalUsersRegistration ?? 0 }}
                     </p>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="flex flex-1 flex-col gap-1">
                     <p class="text-sm font-medium text-neutral-800 dark:text-neutral-50">Total Request Masuk</p>
                     <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                        {{ $totalRequests ?? 0 }}
+                        {{ $totalFuel ?? 0 }}
                     </p>
                 </div>
             </div>
