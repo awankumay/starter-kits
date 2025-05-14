@@ -38,18 +38,5 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie"
-    },
-        "build": {
-        "env": {
-            "APP_ENV": "production",
-            "APP_DEBUG": "false"
-        },
-        "commands": [
-            "composer install --optimize-autoloader --no-dev",
-            "php artisan key:generate --force",
-            "php artisan migrate --force",
-            "php artisan db:seed --force",
-            "php artisan storage:link"
-        ]
     }
 }
