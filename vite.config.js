@@ -14,9 +14,5 @@ export default defineConfig({
     ],
     server: {
         cors: true,
-    },
-        build: {
-        outDir: 'public/build', // pastikan output ke public/build
-        emptyOutDir: true,
-    },
+    }
 });
