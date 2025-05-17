@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             RoleAndUserSeeder::class,
             TypesUnitsSeeder::class,
             UnitsSeeder::class,
+            AttendanceTypeSeeder::class,
+            PositionSeeder::class,
         ]);
 
     }
