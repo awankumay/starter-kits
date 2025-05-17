@@ -54,7 +54,7 @@ class Create extends Component
 
         $this->reset(['name', 'email', 'user_type', 'password', 'password_confirmation', 'status']);
 
-        $this->showAddUserModal = false;
+        // $this->showAddUserModal = false;
 
         Toaster::success('User added successfully!');
     }

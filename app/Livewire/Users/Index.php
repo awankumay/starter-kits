@@ -14,21 +14,23 @@ class Index extends Component
     public $showDeleteModal = false;
 
     // Gunakan dispatch (Livewire v3) alih-alih emit
-    protected $listeners = [
-        'userDeleted' => 'refreshUsers',
-        'userCreated' => 'refreshUsers',
-        'userEdited' => 'refreshUsers',
-    ];
+    // protected $listeners = [
+    //     'userDeleted' => 'refreshUsers',
+    //     'userCreated' => 'refreshUsers',
+    //     'userEdited' => 'refreshUsers',
+    // ];
 
-    public function refreshUsers()
-    {
-        $this->resetPage();
-        $this->showDeleteModal = false;
-    }
+    // public function refreshUsers()
+    // {
+    //     $this->resetPage();
+    //     $this->showDeleteModal = false;
+    // }
 
     public function edit($userId)
     {
+        // dd($userId);
         $this->dispatch('edit', $userId);
+
     }
 
     public function confirmDelete($userId)
