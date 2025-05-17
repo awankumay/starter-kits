@@ -27,6 +27,7 @@ class User extends Authenticatable
         'user_type',
         'is_active',
         'is_deleted',
+        'avatar',
     ];
 
     /**

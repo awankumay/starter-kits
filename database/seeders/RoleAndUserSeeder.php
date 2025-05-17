@@ -17,31 +17,36 @@ class RoleAndUserSeeder extends Seeder
                 'name' => 'Super Admin',
                 'email' => 'superadmin@example.com',
                 'password' => Hash::make('password123'),
-                'role' => 'administrator'
+                'role' => 'administrator',
+                'avatar' => 'personal.jpg'
             ],
             [
                 'name' => 'Supervisor User',
                 'email' => 'supervisor@example.com',
                 'password' => Hash::make('password123'),
-                'role' => 'supervisor'
+                'role' => 'supervisor',
+                'avatar' => 'personal.jpg'
             ],
             [
                 'name' => 'Finance User',
                 'email' => 'finance@example.com',
                 'password' => Hash::make('password123'),
-                'role' => 'finance'
+                'role' => 'finance',
+                'avatar' => 'personal.jpg'
             ],
             [
                 'name' => 'Admin User',
                 'email' => 'adminuser@example.com',
                 'password' => Hash::make('password123'),
-                'role' => 'admin'
+                'role' => 'admin',
+                'avatar' => 'personal.jpg'
             ],
             [
                 'name' => 'Regular User',
                 'email' => 'regularuser@example.com',
                 'password' => Hash::make('password123'),
-                'role' => 'user'
+                'role' => 'user',
+                'avatar' => 'personal.jpg'
             ],
         ];
 
@@ -51,6 +56,7 @@ class RoleAndUserSeeder extends Seeder
                 [
                     'name' => $userData['name'],
                     'password' => $userData['password'],
+                    'avatar' => $userData['avatar'],
                 ]
             );
             $user->syncRoles([$userData['role']]);

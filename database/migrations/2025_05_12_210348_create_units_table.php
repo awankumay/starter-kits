@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Menambahkan foreign key constraint ke unit_types
-            $table->foreign('unit_type_id')->references('id')->on('unit_types')->onDelete('restrict');
+            // $table->foreign('unit_type_id')->references('id')->on('unit_types')->onDelete('restrict');
         });
     }
 

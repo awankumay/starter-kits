@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Menambahkan foreign key constraint ke units (nama tabel yang benar)
-            $table->foreign('operations_unit_id')->references('id')->on('units')->onDelete('restrict');
+            // $table->foreign('operations_unit_id')->references('id')->on('units')->onDelete('restrict');
 
             // Relasi ke tabel users jika ada
             // $table->foreign('requested_by')->references('id')->on('users')->onDelete('set null');
