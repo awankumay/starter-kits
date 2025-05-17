@@ -100,7 +100,11 @@
         <!-- Desktop User Menu -->
         <flux:dropdown position="top" align="end">
 
-            <flux:profile avatar="{{ asset('storage/' . auth()->user()->avatar) }}" class="h-8 w-8 rounded-lg object-cover"  />
+            <flux:profile
+                avatar="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('personal.jpg') }}"
+                class="h-8 w-8 rounded-lg object-cover"
+                onerror="this.onerror=null;this.src='{{ asset('personal.jpg') }}';"
+            />
 
             <flux:menu>
                 <flux:menu.radio.group>
@@ -111,8 +115,12 @@
                                     class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                     {{-- {{ auth()->user()->initials() }} --}}
                                     {{-- Avatars --}}
-                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar"
-                                        class="h-full w-full object-cover" />
+                                    <img
+                                        src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('personal.jpg') }}"
+                                        alt="Avatar"
+                                        class="h-full w-full object-cover"
+                                        onerror="this.onerror=null;this.src='{{ asset('personal.jpg') }}';"
+                                    />
                                 </span>
                             </span>
 

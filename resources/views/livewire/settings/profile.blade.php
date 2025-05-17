@@ -94,7 +94,7 @@ new class extends Component {
             <div class="bg-white rounded-lg flex flex-col items-center justify-center"
                 style="width:150px; height:150px;">
                 <img
-                    src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('personal.jpg') }}"
+                    src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('./personal.jpg') }}"
                     alt="Avatar"
                     class="object-cover rounded-full"
                     style="width:140px; height:140px;"
