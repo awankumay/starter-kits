@@ -1,5 +1,5 @@
 ---
 deployment:
 tasks:
-- export DEPLOYPATH=/home/awab4759/public_html/git
-- /bin/cp -r * $DEPLOYPATH
+- export DEPLOYPATH=/home/awab4759/public_html/dev-moms.awantech.xyz/
+- /bin/cp -R * $DEPLOYPATH
