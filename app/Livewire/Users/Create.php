@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
-    public $name, $email, $password, $password_confirmation;
+    public $name, $email, $password, $password_confirmation, $avatar;
     public $user_type = 'user';
     public $status = 'active'; // default status aktif
     public $showAddUserModal = false;
@@ -23,6 +23,7 @@ class Create extends Component
         'user_type' => 'required|string',
         'status' => 'required|in:active,inactive',
         'password' => 'required|string|min:8|confirmed',
+        'avatar' => 'nullable|image|max:1024', // Maksimal 1MB
     ];
 
     public function mount()
@@ -41,6 +42,7 @@ class Create extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'avatar' => null, // Default avatar
             'is_active' => $is_active,
             'is_deleted' => 0 // Default untuk user baru
         ]);

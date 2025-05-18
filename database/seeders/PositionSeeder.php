@@ -13,17 +13,17 @@ class PositionSeeder extends Seeder
     public function run(): void
     {
         $positions = [
-            ['name' => 'Supervisor', 'description' => 'Mengawasi dan mengelola tim'],
-            ['name' => 'Staff', 'description' => 'Staf administrasi atau pendukung'],
-            ['name' => 'HRD', 'description' => 'Mengelola sumber daya manusia'],
-            ['name' => 'Operator', 'description' => 'Mengoperasikan mesin atau alat'],
-            ['name' => 'Driver', 'description' => 'Pengemudi kendaraan'],
-            ['name' => 'Crew', 'description' => 'Buruh kasar, pekerja fisik umum'],
-            ['name' => 'Helper', 'description' => 'Bantuan untuk pekerjaan tertentu'],
+            ['position' => 'Supervisor', 'description' => 'Mengawasi dan mengelola tim'],
+            ['position' => 'Staff', 'description' => 'Staf administrasi atau pendukung'],
+            ['position' => 'HRD', 'description' => 'Mengelola sumber daya manusia'],
+            ['position' => 'Operator', 'description' => 'Mengoperasikan mesin atau alat'],
+            ['position' => 'Driver', 'description' => 'Pengemudi kendaraan'],
+            ['position' => 'Crew', 'description' => 'Buruh kasar, pekerja fisik umum'],
+            ['position' => 'Helper', 'description' => 'Bantuan untuk pekerjaan tertentu'],
         ];
 
         foreach ($positions as $position) {
-            Position::firstOrCreate(['name' => $position['name']], $position);
+            Position::firstOrCreate(['position' => $position['position']], $position);
         }
     }
 }

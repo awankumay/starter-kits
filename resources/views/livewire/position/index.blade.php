@@ -1,7 +1,7 @@
 <section>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Types') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Types Pages') }}</flux:subheading>
+        <flux:heading size="xl" level="1">{{ __('Positions') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Positions Pages') }}</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
     <div class="flex justify-between items-center mb-4">
@@ -16,23 +16,26 @@
                     <flux:menu.item variant="danger" icon="trash">Bulk Delete</flux:menu.item>
                 </flux:menu>
             </flux:dropdown>
-            {{-- Add New User --}}
-            <flux:modal.trigger name="add-types">
+            {{-- Add New Positions --}}
+            <flux:modal.trigger name="add-position">
                 <flux:button variant="primary" icon:leading="plus">
-                    Add Type
+                    Add Position
                 </flux:button>
             </flux:modal.trigger>
         </div>
         <div>
             <div class="relative">
-                <flux:input
-                    as="text"
-                    placeholder="Search for types"
-                    icon="magnifying-glass">
+                <flux:input as="text" placeholder="Search for units" wire:model.live="search" icon="magnifying-glass">
                 </flux:input>
             </div>
         </div>
     </div>
+
+    @if(session()->has('message'))
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+        <p>{{ session('message') }}</p>
+    </div>
+    @endif
     <div class="overflow-x-auto bg-white dark:bg-zinc-800/40 rounded-lg">
         <table class="table-custom">
             <thead>
@@ -41,33 +44,31 @@
                         <input type="checkbox"
                             class="rounded border-zinc-300 dark:border-zinc-600 text-blue-600 focus:ring-blue-500">
                     </th>
-                    <th>Type</th>
-                    <th>Brand</th>
+                    <th>Positions</th>
                     <th>Description</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($unitTypes as $unitType)
+                @forelse ($positions as $position)
                 <tr>
                     <td class="checkbox-cell">
                         <input type="checkbox"
                             class="rounded border-zinc-300 dark:border-zinc-600 text-blue-600 focus:ring-blue-500">
                     </td>
-                    <td>{{ $unitType->type }}</td>
-                    <td>{{ $unitType->brand }}</td>
-                    <td>{{ $unitType->description }}</td>
+                    <td>{{ $position->position }}</td>
+                    <td>{{ $position->description }}</td>
                     <td>
                     <div class="flex items-center justify-start space-x-4">
                         <div class="flex items-center justify-start space-x-4">
-                            <flux:modal.trigger name="edit-unitType">
-                                <flux:button type="button" class="mr-2" wire:click="edit({{ $unitType->id }})">
+                            <flux:modal.trigger name="edit-position">
+                                <flux:button type="button" class="mr-2" wire:click="edit({{ $position->id }})">
                                     Edit
                                 </flux:button>
 
                             </flux:modal.trigger>
-                            <flux:modal.trigger name="confirm-unitType-deletion">
-                                <flux:button variant="danger" class="mr-2" wire:click="confirmDelete({{ $unitType->id }})">
+                            <flux:modal.trigger name="confirm-position-deletion">
+                                <flux:button variant="danger" class="mr-2" wire:click="confirmDelete({{ $position->id }})">
                                     Delete
                                 </flux:button>
                             </flux:modal.trigger>
@@ -84,26 +85,26 @@
             </tbody>
         </table>
     </div>
-    {{-- Modal Create Types --}}
-    <livewire:unit-types.create />
 
-    {{-- Modal Edit Types --}}
-    <livewire:unit-types.edit />
+    <livewire:position.create />
+    <livewire:position.edit />
 
-    {{-- Modal Show Delete Confrim --}}
-    <flux:modal wire:model.self="showDeleteModal" name="confirm-unitType-deletion" class="md:w-[400px]">
+    {{-- Modal Delete --}}
+    <flux:modal wire:model.self="showDeletePositionModal" name="confirm-position-deletion" class="md:w-[400px]">
         <div class="space-y-6">
             <div>
-                <flux:heading size="lg" class="text-red-600">Delete Unit Type</flux:heading>
-                <flux:text class="mt-2">Are you sure you want to delete this unit type? This action cannot be undone.</flux:text>
+                <flux:heading size="lg" class="text-red-600">Delete Position</flux:heading>
+                <flux:text class="mt-2">Are you sure you want to delete this position? This action cannot be undone.</flux:text>
             </div>
             <div class="flex justify-end space-x-3 pt-4">
                 <flux:modal.close>
                     <flux:button type="button" variant="outline" x-on:click="$wire.showDeleteModal = false">Cancel
                     </flux:button>
                 </flux:modal.close>
-                <flux:button type="button" variant="primary" wire:click="deleteUnitType">Confirm</flux:button>
+                <flux:button type="button" variant="primary" wire:click="deletePosition">Confirm</flux:button>
             </div>
         </div>
     </flux:modal>
+
+
 </section>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('position')->unique();
             $table->string('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

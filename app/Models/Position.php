@@ -9,7 +9,7 @@ class Position extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['position', 'description'];
 
     public function employees()
     {

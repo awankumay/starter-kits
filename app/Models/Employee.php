@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Position; // Ensure Position is imported
 
 class Employee extends Model
 {
@@ -14,9 +15,11 @@ class Employee extends Model
         'join_date', 'photo', 'is_active'
     ];
 
+    /**
+     * Get the position that the employee belongs to.
+     */
     public function position()
     {
-        // Tidak perlu foreign key constraint di database, cukup relasi Eloquent
         return $this->belongsTo(Position::class, 'position_id');
     }
 

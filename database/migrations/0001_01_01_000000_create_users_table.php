@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_deleted')->default(0);
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->softDeletes();
         });
 

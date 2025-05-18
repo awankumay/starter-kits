@@ -3,19 +3,19 @@
 
 <div class="grid grid-cols-2 gap-4">
     <div>
-        {{-- <flux:select label="User Type" wire:model="user_type">
+        <flux:select label="User Type" wire:model="user_type">
             <option value="">Select user type</option>
             @foreach($roles as $role)
             <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
             @endforeach
-        </flux:select> --}}
+        </flux:select>
     </div>
 
     <div>
-        {{-- <flux:select label="Status" wire:model="status" required>
+        <flux:select label="Status" wire:model="status" required>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
-        </flux:select> --}}
+        </flux:select>
     </div>
 </div>
 

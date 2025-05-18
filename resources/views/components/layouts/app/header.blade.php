@@ -47,8 +47,10 @@
                 <flux:navbar.item icon:trailing="chevron-down">Employee</flux:navbar.item>
                 <flux:navmenu>
                     <flux:navmenu.item href="#">Absence</flux:navmenu.item>
-                    <flux:navmenu.item href="#">List Employee</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Position</flux:navmenu.item>
+                    <flux:navmenu.item :href="route('employees.index')" :current="request()->routeIs('employees.index')" wire:navigate>
+                    {{ __('List Employees') }}</flux:navmenu.item>
+                    <flux:navmenu.item :href="route('position.index')" :current="request()->routeIs('position.index')" wire:navigate>
+                    {{ __('Positions') }}</flux:navmenu.item>
                     <flux:navmenu.item href="#">Shift Scheduling</flux:navmenu.item>
                 </flux:navmenu>
             </flux:dropdown>
@@ -58,7 +60,8 @@
                 <flux:navmenu>
                     <flux:navmenu.item href="#">Logistic</flux:navmenu.item>
                     <flux:navmenu.item href="#">Operations</flux:navmenu.item>
-                    <flux:navmenu.item href="#">Employee</flux:navmenu.item>
+                    <flux:navmenu.item :href="route('employees.index')" :current="request()->routeIs('employees.index')" wire:navigate>
+                    {{ __('List Employees') }}</flux:navmenu.item>
                 </flux:navmenu>
             </flux:dropdown>
             {{-- User Management --}}
@@ -103,7 +106,6 @@
             <flux:profile
                 avatar="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('personal.jpg') }}"
                 class="h-8 w-8 rounded-lg object-cover"
-                onerror="this.onerror=null;this.src='{{ asset('personal.jpg') }}';"
             />
 
             <flux:menu>
@@ -188,7 +190,8 @@
             <flux:navlist.group expandable :expanded="false" heading="Employee" icon="users">
                 <flux:navlist.item href="#">Absence</flux:navlist.item>
                 <flux:navlist.item href="#">List Employee</flux:navlist.item>
-                <flux:navlist.item href="#">Position</flux:navlist.item>
+                <flux:navlist.item :href="route('position.index')" :current="request()->routeIs('position.index')" wire:navigate>
+                    {{ __('Positions') }}</flux:navlist.item>
                 <flux:navlist.item href="#">Shift Scheduling</flux:navlist.item>
             </flux:navlist.group>
             <flux:navlist.group expandable :expanded="false" heading="Reporting" icon="chart-bar">
